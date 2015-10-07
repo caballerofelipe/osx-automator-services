@@ -111,16 +111,16 @@ function dateFromString(dateString) {
 		/*
 		* Date yyyy-mm-dd hh:mm
 		*/
-		case /^(((((((((\d\d\d\d)-)?\d\d)-)?\d\d) )?\d?\d):)?(\d\d))$/.test(dateString):
-			var minutes = /(\d\d)$/.exec(dateString)? /(\d\d)$/.exec(dateString)[0]: now.getMinutes();
-			dateString = dateString.replace(/(\d\d)$/, '');
-			var hours = /(\d?\d)(?=:$)/.exec(dateString)? /(\d?\d)(?=:$)/.exec(dateString)[0]: now.getHours();
+		case /^(((((((((\d\d\d\d)-)?\d?\d)-)?\d?\d) )?\d?\d):)?(\d?\d))$/.test(dateString):
+			var minutes = Number(/\d?\d$/.exec(dateString)? /\d?\d$/.exec(dateString)[0]: now.getMinutes());
+			dateString = dateString.replace(/\d?\d$/, '');
+			var hours = Number(/\d?\d(?=:$)/.exec(dateString)? /\d?\d(?=:$)/.exec(dateString)[0]: now.getHours());
 			dateString = dateString.replace(/(\d?\d):$/, '');
-			var dayOfMonth = /(\d\d)(?= $)/.exec(dateString)? /(\d\d)(?= $)/.exec(dateString)[0]: now.getDate();
-			dateString = dateString.replace(/(\d\d) $/, '');
-			var month = /(\d\d)(?=-$)/.exec(dateString)? /(\d\d)(?=-$)/.exec(dateString)[0] * 1 - 1: now.getMonth();
-			dateString = dateString.replace(/(\d\d)-$/, '');
-			var year = /(\d\d\d\d)(?=-$)/.exec(dateString)? /(\d\d\d\d)(?=-$)/.exec(dateString)[0]: now.getFullYear();
+			var dayOfMonth = Number(/\d?\d(?= $)/.exec(dateString)? /\d?\d(?= $)/.exec(dateString)[0]: now.getDate());
+			dateString = dateString.replace(/\d?\d $/, '');
+			var month = Number(/\d?\d(?=-$)/.exec(dateString)? /\d?\d(?=-$)/.exec(dateString)[0] * 1 - 1: now.getMonth());
+			dateString = dateString.replace(/\d?\d-$/, '');
+			var year = Number(/\d\d\d\d(?=-$)/.exec(dateString)? /\d\d\d\d(?=-$)/.exec(dateString)[0]: now.getFullYear());
 			return new Date(year, month, dayOfMonth, hours, minutes + now.getTimezoneOffset());
 			break;
 		/*
@@ -132,21 +132,21 @@ function dateFromString(dateString) {
 		* sat or saturday
 		* sun or sunday
 		*/	
-		case /^(mon(day)?|tue(sday)?|wed(nesday)?|thu(rsday)?|fri(day)?|sat(urday)?|sun(day)?)( *\d?\d:\d\d)?$/i.test(dateString):
+		case /^(mon(day)?|tue(sday)?|wed(nesday)?|thu(rsday)?|fri(day)?|sat(urday)?|sun(day)?)( *\d?\d:\d?\d)?$/i.test(dateString):
 			dateString = dateString.toLowerCase();
-			var minutes = 0;
-			var hours = 0;
+			var minutes;
+			var hours;
 			var dayOfMonth = now.getDate();
 			var month = now.getMonth();
 			var year = now.getFullYear();
 			var dayOfWeekName = /^(mon(day)?|tue(sday)?|wed(nesday)?|thu(rsday)?|fri(day)?|sat(urday)?|sun(day)?)/.exec(dateString)[0];
 			dateString = dateString.replace(/^(mon(day)?|tue(sday)?|wed(nesday)?|thu(rsday)?|fri(day)?|sat(urday)?|sun(day)?) */, '');
 			if(dateString.length &gt; 0){
-				hours = /^\d?\d/.exec(dateString)[0];
-				minutes = /\d\d$/.exec(dateString)[0];
+				hours = Number(/^\d?\d/.exec(dateString)[0]);
+				minutes = Number(/\d?\d$/.exec(dateString)[0]);
 			} else {
-				hours = /^\d?\d/.exec(time)[0];
-				minutes = /\d\d$/.exec(time)[0];
+				hours = Number(/^\d?\d/.exec(time)[0]);
+				minutes = Number(/\d?\d$/.exec(time)[0]);
 			}
 			var dayOfWeek = null;
 			switch(dayOfWeekName){
@@ -185,14 +185,14 @@ function dateFromString(dateString) {
 		/*
 		* Add time to now's datetime
 		*/
-		case /^( *(\+|-)\d+(y|mo|d|h|m))*( *\(?\d?\d:\d\d\))?$/.test(dateString):
-			var hours = /^\d?\d/.exec(time)[0];
-			var minutes = /\d\d$/.exec(time)[0];
+		case /^( *(\+|-)\d+(y|mo|d|h|m))* *(\(\d?\d:\d?\d\))?$/.test(dateString):
+			var hours = Number(/^\d?\d/.exec(time)[0]); // Default hours
+			var minutes = Number(/\d\d$/.exec(time)[0]); // Default minutes
 			var useNonDefaultTime = false; // True if hours or minutes should be added to a time - instead of the default hh:mm
-			if(/ *\(?\d?\d:\d\d\)$/.exec(dateString)){
-				minutes = /\d\d(?=\)$)/.exec(dateString)[0];
-				hours = /\d?\d(?=:)/.exec(dateString)[0];
-				dateString = dateString.replace(/ *\(?\d?\d:\d\d\)$/, '');
+			if(/ *\(?\d?\d:\d?\d\)$/.exec(dateString)){
+				minutes = Number(/\d?\d(?=\)$)/.exec(dateString)[0]);
+				hours = Number(/\d?\d(?=:)/.exec(dateString)[0]);
+				dateString = dateString.replace(/ *\(\d?\d:\d?\d\)$/, '');
 				useNonDefaultTime = true;
 			}
 			var dayOfMonth = now.getDate();
@@ -203,7 +203,7 @@ function dateFromString(dateString) {
 				match = /^( *(\+|-)\d+(y|mo|d|h|m))/.exec(dateString)[0];
 				dateString = dateString.replace(/^( *(\+|-)\d+(y|mo|d|h|m))/, '');
 				sign = /(\+|-)/.exec(match)[0];
-				q = /\d+/.exec(match)[0];
+				q = Number(/\d+/.exec(match)[0]);
 				unit = /(y|mo|d|h|m)/.exec(match)[0];
 				if(sign == '+'){
 					dif = q;					
@@ -212,13 +212,13 @@ function dateFromString(dateString) {
 				}
 				switch(unit){
 					case 'y':
-						year += 1*dif;
+						year += dif;
 						break;
 					case 'mo':
-						month += 1*dif;
+						month += dif;
 						break;
 					case 'd':
-						dayOfMonth += 1*dif;
+						dayOfMonth += dif;
 						break;
 					case 'h':
 						if(!useNonDefaultTime){
@@ -226,7 +226,7 @@ function dateFromString(dateString) {
 							minutes = now.getMinutes();
 							useNonDefaultTime = true;
 						}
-						hours = 1*hours + 1*dif;
+						hours = hours + dif;
 						break;
 					case 'm':
 						if(!useNonDefaultTime){
@@ -234,7 +234,7 @@ function dateFromString(dateString) {
 							minutes = now.getMinutes();
 							useNonDefaultTime = true;
 						}
-						minutes = 1*minutes + 1*dif;
+						minutes = minutes + dif;
 						break;
 				}
 			}
@@ -385,7 +385,7 @@ function run(input, parameters) {
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>529.000000:589.000000</string>
+				<string>529.000000:316.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
