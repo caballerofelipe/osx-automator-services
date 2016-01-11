@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>417</string>
+	<string>419</string>
 	<key>AMApplicationVersion</key>
 	<string>2.6</string>
 	<key>AMDocumentVersion</key>
@@ -121,7 +121,7 @@ function dateFromString(dateString) {
 			var month = Number(/\d?\d(?=-$)/.exec(dateString)? /\d?\d(?=-$)/.exec(dateString)[0] * 1 - 1: now.getMonth());
 			dateString = dateString.replace(/\d?\d-$/, '');
 			var year = Number(/\d\d\d\d(?=-$)/.exec(dateString)? /\d\d\d\d(?=-$)/.exec(dateString)[0]: now.getFullYear());
-			return new Date(year, month, dayOfMonth, hours, minutes + now.getTimezoneOffset());
+			return new Date(year, month, dayOfMonth, hours, minutes);
 			break;
 		/*
 		* Next day by name and optionally time
@@ -180,7 +180,7 @@ function dateFromString(dateString) {
 					break;
 			}
 			var addDays = dayOfWeek - now.getDay() &lt;= 0? 7 + (dayOfWeek - now.getDay()): dayOfWeek - now.getDay();
-			return new Date(year, month, dayOfMonth + addDays, hours, minutes + now.getTimezoneOffset());
+			return new Date(year, month, dayOfMonth + addDays, hours, minutes);
 			break;
 		/*
 		* Add time to now's datetime
@@ -238,7 +238,7 @@ function dateFromString(dateString) {
 						break;
 				}
 			}
-			return new Date(year, month, dayOfMonth, hours, minutes + now.getTimezoneOffset());
+			return new Date(year, month, dayOfMonth, hours, minutes);
 			break;
 		default:
 			return new Date(dateString);
@@ -385,7 +385,7 @@ function run(input, parameters) {
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>529.000000:316.000000</string>
+				<string>529.000000:655.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
