@@ -51,16 +51,47 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>// *******************// Execution// *******************function run(input, parameters) {	try {		var currentApp = Application.currentApplication();		currentApp.includeStandardAdditions = true;		Mail = Application('Mail');
-		var reminderDefaultBody;
-		for(var i=0; i&lt;Mail.selection().length; i++){
-			if(i&gt;0)
-				reminderDefaultBody += "\n";
-			reminderDefaultBody += 'message://%3c' + Mail.selection()[i].messageId() + '%3e';
+					<string>// *******************// Functions// *******************function twoDigits(number) {	// http://stackoverflow.com/a/8043061/1071459	return ('0' + number).slice(-2);}// *******************// Execution// *******************function run(input, parameters) {	try {		var currentApp = Application.currentApplication();		currentApp.includeStandardAdditions = true;		Mail = Application('Mail');		var htmlMailLink = {};		var messages = Mail.selection();
+		var alreadyAddedMessagesID = Array();
+		var add, messageDateTmp;		for(var i=0; i&lt;messages.length; i++){
+			add = true;
+			for(var j=0; j&lt;alreadyAddedMessagesID.length; j++){
+				if(alreadyAddedMessagesID[j] == messages[i].messageId()){
+					add = false;
+					break;
+				}
+			}
+			if(!add)
+				continue;
+			alreadyAddedMessagesID.push(messages[i].messageId());
+			messageDateTmp = messages[i].dateSent();
+			htmlMailLink[messageDateTmp] = '';			htmlMailLink[messageDateTmp] += '&lt;a href="message://%3c' + messages[i].messageId() + '%3e"&gt;';						htmlMailLink[messageDateTmp] += '"' + messages[i].subject() + '" sent by ' + messages[i].sender();
+			htmlMailLink[messageDateTmp] += ' on ' + messageDateTmp.getFullYear() + '-' + twoDigits(messageDateTmp.getMonth()+1) + '-' + twoDigits(messageDateTmp.getDate());
+			htmlMailLink[messageDateTmp] += ' ' + messageDateTmp.getHours() + ':' + twoDigits(messageDateTmp.getMinutes());			htmlMailLink[messageDateTmp] += '&lt;/a&gt;';		}
+		var htmlMailLinkKeys = Object.keys(htmlMailLink);
+		htmlMailLinkKeys.sort(function(a,b){
+			// Turn your strings into dates, and then subtract them
+			// to get a value that is either negative, positive, or zero.
+			// More info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+			return new Date(a) - new Date(b);
+		});
+		var htmlText = '';
+		switch(true){
+			case htmlMailLinkKeys.length == 1:
+				htmlText = htmlMailLink[htmlMailLinkKeys[0]];
+				break;
+			case htmlMailLinkKeys.length &gt; 1:
+				htmlText = '&lt;ol&gt;';
+				for(var i=0; i&lt;htmlMailLinkKeys.length; i++){
+					htmlText += '&lt;li&gt;' + htmlMailLink[htmlMailLinkKeys[i]] + '&lt;/li&gt;';
+				}
+				htmlText += '&lt;/ol&gt;';
+				break;
+			default:
+				return;
+				break;
 		}
-//		currentApp.displayDialog(reminderDefaultBody); // Show link
-		return reminderDefaultBody;	} catch (e) {
-		currentApp.displayAlert(e.message);	}}</string>
+//		currentApp.displayDialog(htmlText); // Display Text		return htmlText;	} catch (e) {		currentApp.displayAlert(e.message);	}}</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunJavaScript</string>
@@ -112,12 +143,10 @@
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>529.000000:425.000000</string>
+				<string>529.000000:787.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -132,80 +161,176 @@
 					<key>Container</key>
 					<string>List</string>
 					<key>Optional</key>
-					<false/>
+					<true/>
 					<key>Types</key>
 					<array>
-						<string>com.apple.cocoa.attributed-string</string>
+						<string>com.apple.cocoa.string</string>
 					</array>
 				</dict>
 				<key>AMActionVersion</key>
-				<string>1.2.1</string>
+				<string>2.0.3</string>
 				<key>AMApplication</key>
 				<array>
-					<string>System</string>
+					<string>Automator</string>
 				</array>
 				<key>AMParameterProperties</key>
-				<dict/>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
 				<key>AMProvides</key>
 				<dict>
 					<key>Container</key>
 					<string>List</string>
-					<key>Optional</key>
-					<false/>
 					<key>Types</key>
 					<array>
-						<string>com.apple.cocoa.attributed-string</string>
+						<string>com.apple.cocoa.string</string>
 					</array>
 				</dict>
 				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Copy to Clipboard.action</string>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
 				<key>ActionName</key>
-				<string>Copy to Clipboard</string>
+				<string>Run Shell Script</string>
 				<key>ActionParameters</key>
-				<dict/>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>textutil -stdin -inputencoding UTF-8 -format html -convert rtf -stdout | pbcopy</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>0</integer>
+					<key>shell</key>
+					<string>/bin/bash</string>
+					<key>source</key>
+					<string></string>
+				</dict>
 				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.CopyToClipboard</string>
+				<string>com.apple.RunShellScript</string>
 				<key>CFBundleVersion</key>
-				<string>1.2.1</string>
+				<string>2.0.3</string>
 				<key>CanShowSelectedItemsWhenRun</key>
-				<true/>
-				<key>CanShowWhenRun</key>
 				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
 				<key>Category</key>
 				<array>
 					<string>AMCategoryUtilities</string>
 				</array>
 				<key>Class Name</key>
-				<string>AMCopyToClipboardAction</string>
+				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>D1FD0D82-B5A5-46E5-82C6-4B0832E9164C</string>
+				<string>EF8F7A46-D7E9-4DD5-89B3-6C03482CBF7A</string>
 				<key>Keywords</key>
 				<array>
-					<string>Copy</string>
+					<string>Shell</string>
+					<string>Script</string>
+					<string>Command</string>
+					<string>Run</string>
+					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>71C68469-7320-4D84-8B3C-3A5E4DFCF1A5</string>
+				<string>DCECBD89-AAD5-48A5-ABF9-F7C82A779EDA</string>
 				<key>UUID</key>
-				<string>75642187-317B-4395-AE16-D179B445BEC3</string>
+				<string>B843514F-097E-4952-90E3-484CC442E12D</string>
 				<key>UnlocalizedApplications</key>
 				<array>
-					<string>System</string>
+					<string>Automator</string>
 				</array>
 				<key>arguments</key>
-				<dict/>
-				<key>conversionLabel</key>
-				<integer>0</integer>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>529.000000:970.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
+			<key>isViewVisible</key>
+			<true/>
 		</dict>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>55C7FF66-276C-43FB-8568-F86F21E016C8</key>
+		<key>9999825A-1CF9-4A71-87E6-CCE64676E521</key>
 		<dict>
 			<key>from</key>
 			<string>3EABEF66-9340-43D5-AB86-62E00181991E - 3EABEF66-9340-43D5-AB86-62E00181991E</string>
 			<key>to</key>
-			<string>75642187-317B-4395-AE16-D179B445BEC3 - 75642187-317B-4395-AE16-D179B445BEC3</string>
+			<string>B843514F-097E-4952-90E3-484CC442E12D - B843514F-097E-4952-90E3-484CC442E12D</string>
 		</dict>
 	</dict>
 	<key>workflowMetaData</key>
