@@ -19,3 +19,6 @@ Copies to clipboard selected e-mails information. Creates a link to the e-mail (
 
 ## Copy File URI
 Copies to clipboard the URL of a file and shows the filename full path as simple text.
+
+## Insert Datetime
+Inserts as text the date and time using the date command date '+%Y-%m-%d %H:%M:%S' (returning a string with the following format: yyyy-mm-dd hh:mm:ss).
