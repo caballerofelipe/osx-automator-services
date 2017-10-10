@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>409.2</string>
+	<string>444.1</string>
 	<key>AMApplicationVersion</key>
-	<string>2.5</string>
+	<string>2.8</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -51,7 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>on run {input, parameters}		if {"OFF", "FALSE"} contains (do shell script "defaults read com.apple.finder AppleShowAllFiles") then		set theValue to "TRUE"	else		set theValue to "FALSE"	end if	do shell script ("defaults write com.apple.finder AppleShowAllFiles " &amp; theValue) as string	do shell script "killall Finder"		return inputend run</string>
+					<string>on run {input, parameters}	try		if {"OFF", "FALSE"} contains (do shell script "defaults read com.apple.finder AppleShowAllFiles") then			set theValue to "TRUE"		else			set theValue to "FALSE"		end if	on error errMsg		set theValue to "TRUE"	end try	do shell script ("defaults write com.apple.finder AppleShowAllFiles " &amp; theValue) as string	do shell script "killall Finder"		return inputend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -105,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>529.000000:645.000000</string>
+				<string>309.000000:495.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
