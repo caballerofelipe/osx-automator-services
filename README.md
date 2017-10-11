@@ -22,3 +22,11 @@ Copies to clipboard the URL of a file and shows the filename full path as simple
 
 ## Insert Datetime
 Inserts as text the date and time using the date command date '+%Y-%m-%d %H:%M:%S' (returning a string with the following format: yyyy-mm-dd hh:mm:ss).
+
+## Spotlight delete and reindex
+Runs the command '_sudo mdutil -E /_' which deletes the Spotlight index and makes it do a reindex.
+
+## Dock enable suck minieffect
+Windows in macOS can be minified using two effects Genie and Scale, there is also another hidden effect called suck, this enables it. 
+
+Explanation Video https://youtu.be/R1Ivk-X6RZE (video not made by me).
