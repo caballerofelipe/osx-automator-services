@@ -1,9 +1,6 @@
 # osx-automator-services
 Some services meant to make life a little easier
 
-## Toggle Hidden Files
-Makes Finder toggle hidden files. Call it once and hidden files are shown, call it again and they will be hidden. Repeat if necessary.
-
 ## Create Reminder
 ### ...
 Creates a reminder with a dialog.
@@ -27,6 +24,11 @@ Inserts as text the date and time using the date command date '+%Y-%m-%d %H:%M:%
 Runs the command '_sudo mdutil -E /_' which deletes the Spotlight index and makes it do a reindex.
 
 ## Dock enable suck minieffect
-Windows in macOS can be minified using two effects Genie and Scale, there is also another hidden effect called suck, this enables it. 
+Windows in macOS can be minified using two effects Genie and Scale, there is also another hidden effect called suck, this enables it.
 
-Explanation Video https://youtu.be/R1Ivk-X6RZE (video not made by me).
+[Explanation Video](https://youtu.be/R1Ivk-X6RZE) (not made by me).
+
+## (Deprecated) Toggle Hidden Files
+*Note: This is now deprecated as a shortcut now exists since macOS Sierra which works much quicker: `cmd`+`shift`+`.` ([link](https://ianlunn.co.uk/articles/quickly-showhide-hidden-files-mac-os-x-mavericks/#show-hide-hidden-files-using-terminal)).*
+
+Makes Finder toggle hidden files. Call it once and hidden files are shown, call it again and they will be hidden. Repeat if necessary.
