@@ -65,7 +65,7 @@
 				continue;
 			alreadyAddedMessagesID.push(messages[i].messageId());
 			messageDateTmp = messages[i].dateSent();
-			htmlMailLink[messageDateTmp] = '';			htmlMailLink[messageDateTmp] += '&lt;a href="message://%3c' + messages[i].messageId() + '%3e"&gt;';						htmlMailLink[messageDateTmp] += '"' + messages[i].subject() + '" sent by ' + messages[i].sender();
+			htmlMailLink[messageDateTmp] = '';			htmlMailLink[messageDateTmp] += '&lt;a href="message://%3c' + messages[i].messageId() + '%3e"&gt;';						htmlMailLink[messageDateTmp] += '[' + messages[i].subject() + '] sent by ' + messages[i].sender();
 			htmlMailLink[messageDateTmp] += ' on ' + messageDateTmp.getFullYear() + '-' + twoDigits(messageDateTmp.getMonth()+1) + '-' + twoDigits(messageDateTmp.getDate());
 			htmlMailLink[messageDateTmp] += ' ' + messageDateTmp.getHours() + ':' + twoDigits(messageDateTmp.getMinutes());			htmlMailLink[messageDateTmp] += '&lt;/a&gt;';		}
 		var htmlMailLinkKeys = Object.keys(htmlMailLink);
@@ -128,7 +128,7 @@
 					<dict>
 						<key>default value</key>
 						<string>function run(input, parameters) {
-	
+
 	// Your script goes here
 
 	return input;
