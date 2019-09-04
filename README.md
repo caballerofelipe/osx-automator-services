@@ -14,6 +14,13 @@ Creates a reminder prefilling the dialog with information about an e-mail, creat
 ## Copy Mail URI
 Copies to clipboard selected e-mails information. Creates a link to the e-mail (e-mails) selected and uses information about this document for the link. If only one e-mail is selected a simple link is copied. If more than one e-mail is selected a list is created in the &lt;ol&gt; style.
 
+This creates an **RTF** link to be pasted in a program that allows formatting.
+
+## Copy Mail URI Raw Text
+Copies to clipboard selected e-mails information. Creates a link to the e-mail (e-mails) selected and uses information about this document for the link. If only one e-mail is selected a simple link is copied. If more than one e-mail is selected a simple text list is created.
+
+This creates an **raw** link to be pasted in a program that allows formatting.
+
 ## Copy File URI
 Copies to clipboard the URL of a file and shows the filename full path as simple text.
 
