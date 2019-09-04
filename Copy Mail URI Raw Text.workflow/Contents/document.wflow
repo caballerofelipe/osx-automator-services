@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>444.42</string>
+	<key>AMApplicationVersion</key>
+	<string>2.9</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run JavaScript.action</string>
+				<key>ActionName</key>
+				<string>Run JavaScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>// *******************
+// Functions
+// *******************
+function twoDigits(number) {
+  // http://stackoverflow.com/a/8043061/1071459
+  return ('0' + number).slice(-2);
+}
+
+// *******************
+// Execution
+// *******************
+function run(input, parameters) {
+  try {
+    var currentApp = Application.currentApplication();
+    currentApp.includeStandardAdditions = true;
+    Mail = Application('Mail');
+    var mailLink = {};
+    var messages = Mail.selection();
+    var alreadyAddedMessagesID = Array();
+    var add, messageDateTmp;
+    for (var i = 0; i &lt; messages.length; i++) {
+      add = true;
+      for (var j = 0; j &lt; alreadyAddedMessagesID.length; j++) {
+        if (alreadyAddedMessagesID[j] == messages[i].messageId()) {
+          add = false;
+          break;
+        }
+      }
+      if (!add)
+        continue;
+      alreadyAddedMessagesID.push(messages[i].messageId());
+      messageDateTmp = messages[i].dateSent();
+      mailLink[messageDateTmp] = '';
+      // mailLink[messageDateTmp] += '&lt;a href="message://%3c' + messages[i].messageId() + '%3e"&gt;';
+
+      mailLink[messageDateTmp] += '[' + messages[i].subject() + '] sent by ' + messages[i].sender();
+      mailLink[messageDateTmp] += ' on ' + messageDateTmp.getFullYear() + '-' + twoDigits(messageDateTmp.getMonth() + 1) + '-' + twoDigits(messageDateTmp.getDate());
+      mailLink[messageDateTmp] += ' ' + messageDateTmp.getHours() + ':' + twoDigits(messageDateTmp.getMinutes());
+      mailLink[messageDateTmp] += ' &lt;message://%3c' + messages[i].messageId() + '%3e&gt;';
+    }
+    var mailLinkKeys = Object.keys(mailLink);
+    mailLinkKeys.sort(function(a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      // More info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+      return new Date(a) - new Date(b);
+    });
+    var htmlText = '';
+    switch (true) {
+      case mailLinkKeys.length == 1:
+        htmlText = mailLink[mailLinkKeys[0]];
+        break;
+      case mailLinkKeys.length &gt; 1:
+        // htmlText = '&lt;ol&gt;';
+        for (var i = 0; i &lt; mailLinkKeys.length; i++) {
+          htmlText += ' - ' + mailLink[mailLinkKeys[i]];
+        }
+        // htmlText += '&lt;/ol&gt;';
+        break;
+      default:
+        return;
+        break;
+    }
+    //		currentApp.displayDialog(htmlText); // Display Text
+    return htmlText;
+  } catch (e) {
+    currentApp.displayAlert(e.message);
+  }
+}</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunJavaScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunJavaScriptAction</string>
+				<key>InputUUID</key>
+				<string>43E8AA55-27BD-4225-AD30-EE42CA98301B</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+					<string>JavaScript</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>2D659C44-3276-4F50-B52E-241ED46E7215</string>
+				<key>UUID</key>
+				<string>3EABEF66-9340-43D5-AB86-62E00181991E</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>function run(input, parameters) {
+	
+	// Your script goes here
+
+	return input;
+}</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>309.000000:635.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.attributed-string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.2.1</string>
+				<key>AMApplication</key>
+				<array>
+					<string>System</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict/>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.attributed-string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Copy to Clipboard.action</string>
+				<key>ActionName</key>
+				<string>Copy to Clipboard</string>
+				<key>ActionParameters</key>
+				<dict/>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.CopyToClipboard</string>
+				<key>CFBundleVersion</key>
+				<string>1.2.1</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<false/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMCopyToClipboardAction</string>
+				<key>InputUUID</key>
+				<string>A2B23383-B227-4FD3-A866-3532E0D09201</string>
+				<key>Keywords</key>
+				<array>
+					<string>Copy</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>A9F88500-E348-4CBA-9756-C37D18C8DDE9</string>
+				<key>UUID</key>
+				<string>07214D5E-BF8F-4AC5-ADFC-5F8CB282820B</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>System</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+				<key>conversionLabel</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>FA6BDFC9-34DE-4215-87E7-C0515E776734</key>
+		<dict>
+			<key>from</key>
+			<string>3EABEF66-9340-43D5-AB86-62E00181991E - 3EABEF66-9340-43D5-AB86-62E00181991E</string>
+			<key>to</key>
+			<string>07214D5E-BF8F-4AC5-ADFC-5F8CB282820B - 07214D5E-BF8F-4AC5-ADFC-5F8CB282820B</string>
+		</dict>
+	</dict>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleID</key>
+		<string>com.apple.mail</string>
+		<key>applicationBundleIDsByPath</key>
+		<dict>
+			<key>/Applications/Mail.app</key>
+			<string>com.apple.mail</string>
+		</dict>
+		<key>applicationPath</key>
+		<string>/Applications/Mail.app</string>
+		<key>applicationPaths</key>
+		<array>
+			<string>/Applications/Mail.app</string>
+		</array>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>11</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
+		<key>serviceApplicationBundleID</key>
+		<string>com.apple.mail</string>
+		<key>serviceApplicationPath</key>
+		<string>/Applications/Mail.app</string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
