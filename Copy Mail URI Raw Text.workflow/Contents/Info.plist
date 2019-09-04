@@ -12,7 +12,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Copy Mail URI raw text</string>
+				<string>Copy Mail URI Raw Text</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
