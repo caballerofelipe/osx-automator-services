@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>date '+%Y-%m-%d %H:%M:%S'</string>
+					<string>date '+%Y-%m-%d_%H-%M-%S'</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -84,7 +84,7 @@
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>CE25E38B-2D78-47DC-9FB3-DA45E7D78E29</string>
+				<string>948F64CF-68DD-411C-9862-DE8DC5AAD98E</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -94,9 +94,9 @@
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>D526733C-5D76-455D-A981-4946F59BF829</string>
+				<string>338D6528-9BAF-44A1-8539-5B81D578D664</string>
 				<key>UUID</key>
-				<string>85ACAF0A-65A2-4F8B-9065-D6273B3DBBF0</string>
+				<string>9ED3F4EE-F166-42B9-8970-A458A34D3983</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -170,14 +170,14 @@
 					</dict>
 				</dict>
 				<key>isViewVisible</key>
-				<true/>
+				<integer>1</integer>
 				<key>location</key>
 				<string>309.000000:305.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
-			<true/>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>connectors</key>

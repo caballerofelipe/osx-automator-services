@@ -59,7 +59,8 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>date '+%Y-%m-%d %H:%M:%S'</string>
+					<string># https://stackoverflow.com/a/12524345/1071459
+date '+%Y-%m-%d' | tr -d '\n' | pbcopy &amp;&amp; pbpaste</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
