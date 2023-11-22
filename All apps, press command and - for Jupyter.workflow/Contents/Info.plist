@@ -12,15 +12,10 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Firefox, run command and - for Jupyter</string>
+				<string>All apps, press command and - for Jupyter</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
-			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSApplicationIdentifier</key>
-				<string>org.mozilla.firefox</string>
-			</dict>
 		</dict>
 	</array>
 </dict>
