@@ -4,8 +4,13 @@ Some services meant to make life a little easier
 
 ## Jupyter
 
-### ...
+### Firefox, press ctrl and - for Jupyter.workflow
+The command to comment is not usable on non-English keyboards in Jupyter on macOS, this workflow allows commenting. It runs the `ctrl`+`-` without having to press thoses keys (which are unnaccessible on non English keyboards as a shortcut).
 
+This workflow is configured to only run on Firefox.
+
+### All apps, press ctrl and - for Jupyter.workflow
+The command to comment is not usable on non-English keyboards in Jupyter on macOS, this workflow allows commenting. It runs the `ctrl`+`-` without having to press thoses keys (which are unnaccessible on non English keyboards as a shortcut).
 
 ## Reminders
 ### Create Reminder.workflow
